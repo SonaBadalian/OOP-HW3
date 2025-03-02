@@ -1,0 +1,902 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
+import java.util.HashSet;
+import java.util.Set;
+
+//No.1
+/*class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter the number of sutdent");
+
+        int[] scores = new int[input.nextInt()];
+        System.out.println("Enter " + (scores.length ) + " scores");
+        for (int i = 0; i < scores.length; i++) {
+            scores[i] = input.nextInt();
+        }
+        int bestScore = bestStudentScores(scores);
+
+        for (int i = 0; i < scores.length; i ++) {
+            int diff = bestScore - scores[i];
+            String grade = switch (diff / 10) {
+                case 0 -> "A";
+                case 1 -> "B";
+                case 2 -> "C";
+                case 3 -> "D";
+                default -> "F";
+
+            };
+            System.out.println("Student " + i + "'s score is " + scores[i] + " and grade is " + grade);
+        }
+    }
+    public static int bestStudentScores(int[] array) {
+        int bestScore = 0;
+        for (int j : array) {
+            if (j > bestScore) {
+                bestScore = j;
+            }
+        }
+        return bestScore; 
+    }
+} */
+        
+        
+//No.2
+/*public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter a number for reversing");
+        int num = input.nextInt();
+        int reversed = 0;
+
+        System.out.println("Original Number: " + num);
+
+        while(num != 0) {
+
+            int digit = num % 10;
+            reversed = reversed * 10 + digit;
+            num /= 10;
+        }
+
+        System.out.println("Reversed Number: " + reversed); 
+    }
+} */
+        
+//No.3
+/*public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter integers between 1 and 100 (end input with 0):");
+        int[] numbers = new int[101];
+        while (true) {
+            int number = input.nextInt();
+            if (number == 0) {
+                break;
+            }
+
+            if (number >= 1 && number < 101) {
+                numbers[number]++;
+            }
+        }
+        for (int i = 1; i < 101; i++) {
+
+            if (numbers[i] > 0) {
+                if (numbers[i] > 1) {
+                    System.out.println(i + "occured "+ numbers[i] + "times");
+                } else  {
+                    System.out.println(i + "occured "+ numbers[i] + "time");
+                }
+            }
+        }
+        input.close(); 
+    }
+} */
+        
+//No.4 
+/*public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        int[] scores = new int[100];
+        int index = 0;
+
+        System.out.println("Enter scores (end input with negative number):");
+
+        while (true) {
+            int score = input.nextInt();
+            if (score < 0) {
+                break;
+            } else {
+                if (index < scores.length) {  
+                    scores[index] = score;
+                    index++;
+                }
+            }
+        }
+
+        double average = sum(scores) / lastIndex(scores);
+        System.out.println("Average score: " + average);
+
+        System.out.println("Number of scores less than average: " + lessThanAverage(scores, average));
+        System.out.println("Number of scores equal to average: " + equalToAverage(scores, average));
+        System.out.println("Number of scores greater than average: " + greaterThanAverage(scores, average));
+    }
+
+    public static double sum(int[] array) {
+        double sum = 0;
+        for (int i = 0; i < lastIndex(array); i++) {
+            sum += array[i];
+        }
+        return sum;
+    }
+
+    public static int lastIndex(int[] array) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == 0) {
+                return i;
+            }
+        }
+        return array.length;  
+    }
+
+    public static int lessThanAverage(int[] array, double target) {
+        int count = 0;
+        for (int i = 0; i < lastIndex(array); i++) {
+            if (array[i] < target) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static int equalToAverage(int[] array, double target) {
+        int count = 0;
+        for (int i = 0; i < lastIndex(array); i++) {
+            if (array[i] == target) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static int greaterThanAverage(int[] array, double target) {
+        int count = 0;
+        for (int i = 0; i < lastIndex(array); i++) {
+            if (array[i] > target) {
+                count++;
+            }
+        }
+        return count; 
+    }
+} */
+        
+        
+//No.5
+/*public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        int[] myArray = new int[10];
+        int count = 0;
+        System.out.println("Enter 10 integer: \nMore than 10 numbers are ignored");
+
+        for (int i = 0; i < 10; i++) {
+           int number = input.nextInt();
+
+           boolean isUnique = true;
+
+           for (int j = 0; j < count; j++) {
+               if (number == myArray[j]) {
+                   isUnique = false;
+                   break;
+               }
+           }
+
+           if (isUnique) {
+               myArray[count++] = number;
+           }
+        }
+        System.out.println("The number of distinct numbers is " + count);
+        for (int i = 0; i < count; i++) {
+            System.out.print(myArray[i] + " ");
+        } 
+    }
+} */
+        
+//No.6
+/*public class Main {
+    public static void main(String[] args) {
+        final int NUMBER_OF_PRIMES = 50;
+        int[] primes = new int[NUMBER_OF_PRIMES];
+        int count = 0;
+        int number = 2;
+        
+        while (count < NUMBER_OF_PRIMES) {
+            if (isPrime(number, primes, count)) {
+                primes[count] = number; 
+                count++;
+            }
+            number++;
+        }
+
+        for (int i = 0; i < NUMBER_OF_PRIMES; i++) {
+            System.out.print(primes[i] + (i % 10 == 9 ? "\n" : " "));
+        }
+    }
+
+    public static boolean isPrime(int number, int[] primes, int count) {
+        if (number < 2) return false;
+        
+        int sqrt = (int) Math.sqrt(number);
+        
+        for (int i = 0; i < count && primes[i] <= sqrt; i++) {
+            if (number % primes[i] == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+} */
+ 
+//No.7
+/*public class Main {
+    public static void main(String[] args) {
+        int[] counts = new int[10];
+        Random rand = new Random();
+
+        for (int i = 0; i < 100; i++) {
+            int num = rand.nextInt(10);
+            counts[num]++;
+        }
+
+        System.out.println("Digit counts:");
+        for (int i = 0; i < counts.length; i++) {
+            System.out.println(i + ": " + counts[i]);
+        }
+    }
+} */
+
+//No.8
+/*public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter 10 integer: ");
+
+        int[] intArray = new int[10];
+        for (int i = 0; i < 10; i++) {
+            intArray[i] = input.nextInt();
+        }
+        System.out.println("Average is " + average(intArray));
+
+        System.out.println("Enter 10 floating number");
+        double[] doubleArray = new double[10];
+        for (int i = 0; i < 10; i++) {
+            doubleArray[i] = input.nextDouble();
+        }
+        System.out.println("Average is " + average(doubleArray));
+
+        input.close();
+
+    }
+    public static double average(int[] array) {
+        double sum = 0;
+        for (int i : array) {
+            sum += i;
+        }
+        return  sum/array.length;
+
+    }
+    public static double average(double[] array) {
+        double sum = 0;
+        for (double v : array) {
+            sum += v;
+        }
+        return  sum/array.length;
+    }
+} */
+
+//No.9
+/*public class Main {
+    public static double min(double[] array) {
+        double minValue = array[0];
+
+        for (int i = 1; i < array.length; i++) {
+            if (array[i] < minValue) {
+                minValue = array[i];
+            }
+        }
+        return minValue;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        double[] numbers = new double[10];
+
+        System.out.println("Enter 10 numbers:");
+
+        for (int i = 0; i < 10; i++) {
+            numbers[i] = scanner.nextDouble();
+        }
+
+        double minValue = min(numbers);
+        System.out.println("The minimum value is: " + minValue);
+    }
+} */
+
+//No.10
+/*public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        double[] numbers = new double[10]; 
+        System.out.println("Enter 10 numbers: ");
+        for (int i = 0; i < numbers.length; i++) {
+            numbers[i] = input.nextDouble();
+        }
+
+        int minIndex = indexOfSmallestElement(numbers);
+        System.out.println("The index of the smallest element is: " + minIndex);
+
+        input.close();
+    }
+    public static int indexOfSmallestElement(double[] array) {
+        int minIndex = 0;
+        double minValue = array[0];
+
+        for (int i = 1; i < array.length; i++) {
+            if (array[i] < minValue) {
+                minValue = array[i];
+                minIndex = i;
+            }
+        }
+        return minIndex;
+    }
+} */
+
+//No.11
+/*public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter 10 number");
+        double[] array = new double[10];
+        for (int i = 0; i<10; i++) {
+            array[i] = input.nextDouble();
+        }
+        System.out.println("The mean is " + mean(array));
+        System.out.println("The deviation is " + deviation(array));
+
+    }
+    public static double mean(double[] array) {
+        double sum = 0;
+        for (int i = 0; i < array.length; i++){
+            sum += array[i];
+        }
+        return sum/array.length;
+    }
+    public static double deviation(double[] array) {
+        double sum = 0;
+        for (int i = 0; i < array.length; i++) {
+            sum += Math.pow(array[i]-mean(array),2);
+        }
+        return Math.sqrt(sum/array.length-1);
+    }
+
+} */
+
+//No.12
+/*public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        double[] numbers = new double[10];
+        System.out.println("Enter 10 float numbers: ");
+        for (int i = 0; i < numbers.length; i++) {
+            numbers[i] = input.nextDouble();
+        }
+        reverse(numbers);
+
+        System.out.println("Reversed array:");
+        for (double num : numbers) {
+            System.out.print(num + " ");
+        }
+
+        input.close();
+    }
+
+    public static double[] reverse(double[] array) {
+        int left = 0, right = array.length - 1;
+        while (left < right) {
+
+            double temp = array[left];
+            array[left] = array[right];
+            array[right] = temp;
+            left++;
+            right--;
+        }
+        return array;
+    }
+} */
+
+//No.13
+/*public class Main {
+    public static void main(String[] args) {
+        for (int i = 0; i < 45; i++) {
+            System.out.printf("%4d", getRandom(1,100,4,8,95,93));
+            if ((i + 1) % 15 == 0) {
+                System.out.println();
+            }
+        }
+
+    }
+    public static int getRandom(int start, int end, int... numbers) {
+        boolean isIncluded;
+        int someRandom;
+        do {
+            someRandom = (int) (Math.random()  * (end - start + 1)) + start ;
+            isIncluded = false;
+            for (int i : numbers) {
+                if (i == someRandom) {
+                    isIncluded = true;
+                    break;
+                }
+            }
+        } while (isIncluded);
+        return someRandom;
+    }
+} */
+
+//No.14
+/*public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        int[] numbers = new int[5];
+
+        System.out.println("Enter five numbers: ");
+        for (int i = 0; i < numbers.length; i++) {
+            numbers[i] = input.nextInt();
+        }
+        int result = gcd(numbers);
+        System.out.println("The GCD of the entered numbers is: " + result);
+
+        input.close();
+    }
+
+    public static int gcd(int... numbers) {
+        int result = numbers[0];
+        for (int i = 1; i < numbers.length; i++) {
+            result = gcdTwoNumbers(result, numbers[i]);
+        }
+        return result;
+    }
+
+    private static int gcdTwoNumbers(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+} */
+
+//No.15
+/*public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        int[] numbers = new int[10];
+
+        System.out.println("Enter 10 numbers: ");
+        for (int i = 0; i < numbers.length; i++) {
+            numbers[i] = input.nextInt();
+        }
+
+        int[] distinctNumbers = eliminateDuplicates(numbers);
+        System.out.print("The distinct numbers are: ");
+        for (int num : distinctNumbers) {
+            System.out.print(num + " ");
+        }
+
+        input.close();
+    }
+    public static int[] eliminateDuplicates(int[] list) {
+        ArrayList<Integer> uniqueList = new ArrayList<>();
+
+        for (int num : list) {
+            if (!uniqueList.contains(num)) {
+                uniqueList.add(num);
+            }
+        }
+        int[] result = new int[uniqueList.size()];
+        for (int i = 0; i < uniqueList.size(); i++) {
+            result[i] = uniqueList.get(i);
+        }
+        return result;
+    }
+} */
+
+//No.16
+/*public class Main {
+    public static void main(String[] args) {
+        final int SIZE = 100000;
+        int[] numbers = new int[SIZE];
+        Random random = new Random();
+
+        for (int i = 0; i < SIZE; i++) {
+            numbers[i] = random.nextInt(1000000) + 1;
+        }
+
+        int key = numbers[random.nextInt(SIZE)];
+
+        long startTime = System.nanoTime();
+        int linearResult = linearSearch(numbers, key);
+        long endTime = System.nanoTime();
+        long linearTime = endTime - startTime;
+
+        Arrays.sort(numbers);
+
+        startTime = System.nanoTime();
+        int binaryResult = Arrays.binarySearch(numbers, key);
+        endTime = System.nanoTime();
+        long binaryTime = endTime - startTime;
+
+        System.out.println("Key: " + key);
+        System.out.println("Linear Search Execution Time: " + linearTime + " nanoseconds");
+        System.out.println("Binary Search Execution Time: " + binaryTime + " nanoseconds");
+        System.out.println("Linear Search Index: " + linearResult);
+        System.out.println("Binary Search Index: " + binaryResult);
+    }
+    public static int linearSearch(int[] array, int key) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == key) {
+                return i;
+            }
+        }
+        return -1;
+    }
+} */
+
+//No.17
+/*public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter the number of students: ");
+        int numStudents = input.nextInt();
+
+        String[] names = new String[numStudents];
+        int[] scores = new int[numStudents];
+
+        for (int i = 0; i < numStudents; i++) {
+            System.out.print("Enter student " + (i + 1) + " name: ");
+            names[i] = input.next(); 
+            System.out.print("Enter " + names[i] + "'s score: ");
+            scores[i] = input.nextInt(); 
+        }
+
+        sortStudents(names, scores);
+
+        System.out.println("\nStudents in descending order of scores:");
+        for (int i = 0; i < numStudents; i++) {
+            System.out.println(names[i] + " - " + scores[i]);
+        }
+
+        input.close();
+    }
+
+    public static void sortStudents(String[] names, int[] scores) {
+        for (int i = 0; i < scores.length - 1; i++) {
+            for (int j = i + 1; j < scores.length; j++) {
+                if (scores[i] < scores[j]) { 
+                    int tempScore = scores[i];
+                    scores[i] = scores[j];
+                    scores[j] = tempScore;
+
+                    String tempName = names[i];
+                    names[i] = names[j];
+                    names[j] = tempName;
+                }
+            }
+        }
+    }
+} */
+
+//No.18 
+/*public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        int[] myArray = new int[10];
+
+        System.out.println("Enter 10 number");
+        for (int i = 0; i < myArray.length;i++){
+            myArray[i] = input.nextInt();
+        }
+        bubbleSort(myArray);
+        for (int e : myArray) {
+            System.out.print(e + " ");
+        }
+    }
+    public static void bubbleSort(int[] list) {
+        for (int i = 0; i < list.length - 1; i++){
+            for (int j = 0; j < list.length - i - 1; j++) {
+                if (list[j] >list[j+1]) {
+                    int temp = list[j];
+                    list[j] = list[j+1];
+                    list[j+1] = temp;
+                }
+            }
+        }
+    }
+} */
+
+//No.19
+/*public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Enter the size of the list: ");
+        int[] myArray = new int[input.nextInt()];
+
+        System.out.println("Enter the contents of the list: ");
+        for (int i = 0; i < myArray.length; i++) {
+            myArray[i] = input.nextInt();
+        }
+        System.out.print("The list has" + myArray.length + " integers" );
+        for (int j : myArray) {
+            System.out.print(" " + j);
+        }
+        System.out.println();
+        if (isSorted(myArray)) {
+            System.out.println("The list is already sorted");
+        } else {
+            System.out.println("The list is not sorted");
+        }
+    }
+    public static boolean isSorted(int[] list) {
+        for (int i = 0; i < list.length - 1; i++) {
+            if (list[i] > list[i+1]) {
+                return false;
+            }
+        }
+        return true;
+    }
+} */
+
+//No.20
+/*public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter 10 double numbers:");
+        double[] numbers = new double[10];
+        for (int i = 0; i < numbers.length; i++) {
+            numbers[i] = scanner.nextDouble();
+        }
+        selectionSort(numbers);
+
+        System.out.println("Sorted numbers in descending order:");
+        for (double number : numbers) {
+            System.out.print(number + " ");
+        }
+    }
+    public static void selectionSort(double[] list) {
+        for (int i = list.length - 1; i > 0; i--) {
+            double currentMax = list[0];
+            int currentMaxIndex = 0;
+            for (int j = 1; j <= i; j++) {
+                if (list[j] > currentMax) {
+                    currentMax = list[j];
+                    currentMaxIndex = j;
+                }
+            }
+            if (currentMaxIndex != i) {
+                list[currentMaxIndex] = list[i];
+                list[i] = currentMax;
+            }
+        }
+    }
+} */
+
+//No.21
+/*public class Main {
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            System.out.println("No numbers provided. Please enter integers as command-line arguments.");
+            return;
+        }
+        int sum = 0;
+        for (String arg : args) {
+            try {
+                sum += Integer.parseInt(arg);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input: '" + arg + "' is not an integer.");
+            }
+        }
+        System.out.println("Total sum: " + sum);
+    }
+} */
+
+//No.22
+/*public class Main {
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            System.out.println("Please provide a string as a command-line argument.");
+            return;
+        }
+        String input = args[0]; 
+        int uppercaseCount = 0;
+        for (char c : input.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                uppercaseCount++;
+            }
+        }
+        System.out.println("Number of uppercase letters: " + uppercaseCount);
+    }
+} */
+
+//No.23
+/*public class Main {
+    public static void main(String[] args) {
+        boolean[] lockers = new boolean[100];
+        for (int student = 1; student <= 100; student++) {
+            for (int locker = student - 1; locker < 100; locker += student) {
+                lockers[locker] = !lockers[locker];
+            }
+        }
+        System.out.print("Open lockers: ");
+        for (int i = 0; i < 100; i++) {
+            if (lockers[i]) {
+                System.out.print((i + 1) + " ");
+            }
+        }
+        System.out.println();
+    }
+}
+
+//No.24
+
+
+//No.25
+/*public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Please enter the numbers");
+
+        int a,b,c;
+
+        a = input.nextInt();
+        b = input.nextInt();
+        c = input.nextInt();
+
+        double[] eqn = { a, b, c };
+        double[] roots = new double[2];
+
+        if (solveQuadratic(eqn,roots) == 0) {
+            System.out.println("The equation has no real roots.");
+        } else if (solveQuadratic(eqn,roots) == 1) {
+            System.out.println("The equation has one real root: " + roots[0]);
+        } else {
+            System.out.println("The equation has two real roots: " + roots[0] + " and " + roots[1]);
+        }
+    }
+    public static int solveQuadratic(double[] eqn, double[] roots) {
+        double a = eqn[0];
+        double b = eqn[1];
+        double c = eqn[2];
+        double discriminant = Math.pow(b, 2) - 4 * a * c;
+        if (discriminant > 0) {
+            roots[0] = (-b + Math.sqrt(discriminant)) / (2 * a);
+            roots[1] = (-b - Math.sqrt(discriminant)) / (2 * a);
+            return 2;
+        } else if (discriminant == 0) {
+            roots[0] = -b / (2 * a);
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+} */
+
+//No.26
+/*public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter the list_1 size and contents:");
+
+        int listOneLength = input.nextInt();
+        int[] listOne = new int[listOneLength];
+        for (int i = 0; i < listOne.length; i++) {
+            listOne[i] = input.nextInt();
+        }
+
+        System.out.println("Enter the list_1 size and contents:");
+        int listTwoLength = input.nextInt();
+        int[] listTwo = new int[listTwoLength];
+
+        if (equals(listOne,listTwo)) {
+            System.out.println("Two lists are strictly identical");
+        } else {
+            System.out.println("Two lists are not strictly identical");
+        }
+    }
+    public static boolean equals(int[] list1, int[] list2) {
+        if (list1.length != list2.length) {
+            return false;
+        }
+        for (int i = 0; i < list1.length;i++) {
+            if (list1[i] != list2[i]){
+                return false;
+            }
+        }
+        return true;
+    }
+} */
+
+//No.27
+/*public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter the list_1 size and contents:");
+
+        int listOneLength = input.nextInt();
+        int[] listOne = new int[listOneLength];
+        for (int i = 0; i < listOne.length; i++) {
+            listOne[i] = input.nextInt();
+        }
+
+        System.out.println("Enter the list_2 size and contents:");
+        int listTwoLength = input.nextInt();
+        int[] listTwo = new int[listTwoLength];
+        for (int i = 0; i < listOne.length; i++) {
+            listTwo[i] = input.nextInt();
+        }
+
+
+        if (equals(listOne,listTwo)) {
+            System.out.println("Two lists are  identical");
+        } else {
+            System.out.println("Two lists are not  identical");
+        }
+    }
+    public static boolean equals(int[] list1, int[] list2) {
+        if (list1.length != list2.length) {
+            return false;
+        }
+        bubbleSort(list1);
+        bubbleSort(list2);
+        for (int i = 0; i < list1.length;i++) {
+            if (list1[i] != list2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public static void bubbleSort(int[] list) {
+        for (int i = 0; i < list.length - 1; i++) {
+            for (int j = 0; j < list.length - i - 1; j++) {
+                if (list[j] > list[j+1]) {
+                    int temp = list[j];
+                    list[j] = list[j+1];
+                    list[j+1] = temp;
+                }
+            }
+        }
+    }
+} */
+
+//No.28
+/*public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Enter 10 integer: ");
+        int[] myArray = new int[10];
+        for (int i = 0; i < 10; i++){
+            myArray[i] = input.nextInt();
+        }
+        for (int i = 0; i <myArray.length; i++) {
+            for (int j = 0; j < myArray.length; j++) {
+                if (myArray[i] != myArray[j]) {
+                    System.out.println(myArray[i] + " " + myArray[j]);
+                }
+            }
+        }
+    }
+} */
+
