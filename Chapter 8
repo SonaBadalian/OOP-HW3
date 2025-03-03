@@ -3,6 +3,7 @@ import java.util.Arrays;
 import java.util.Stack;
 import java.util.Random;
 import java.util.HashSet;
+import java.util.*;
 
 
 //No.1
@@ -209,6 +210,39 @@ import java.util.HashSet;
     }
 } */
 
+//No.7
+/*public class Main {
+    public static void main(String[] args) {
+        double[][] points = {
+            {-1, 0, 3}, {-1, -1, -1}, {4, 1, 1},
+            {2, 0.5, 9}, {3.5, 2, -1}, {3, 1.5, 3},
+            {-1.5, 4, 2}, {5.5, 4, -0.5}
+        };
+        
+        int p1 = 0, p2 = 1;
+        double shortestDistance = distance(points[p1], points[p2]);
+
+        for (int i = 0; i < points.length; i++) {
+            for (int j = i + 1; j < points.length; j++) {
+                double dist = distance(points[i], points[j]);
+                if (dist < shortestDistance) {
+                    shortestDistance = dist;
+                    p1 = i;
+                    p2 = j;
+                }
+            }
+        }
+        System.out.println("The closest two points are: (" + points[p1][0] + ", " + points[p1][1] + ", " + points[p1][2] + ") and (" +
+                           points[p2][0] + ", " + points[p2][1] + ", " + points[p2][2] + ")");
+        System.out.println("Their distance is: " + shortestDistance);
+    }
+    public static double distance(double[] p1, double[] p2) {
+        return Math.sqrt(Math.pow(p2[0] - p1[0], 2) +
+                         Math.pow(p2[1] - p1[1], 2) +
+                         Math.pow(p2[2] - p1[2], 2));
+    }
+} */
+
 //No.8
 /*public class Main {
     public static void main(String[] args) {
@@ -263,6 +297,71 @@ import java.util.HashSet;
     
     public static double distance(double[] p1, double[] p2) {
         return Math.sqrt(Math.pow(p1[0] - p2[0], 2) + Math.pow(p1[1] - p2[1], 2));
+    }
+} */
+
+//No.9
+/*public class Main {
+    public static void main(String[] args) {
+        char[][] board = {
+            {' ', ' ', ' '},
+            {' ', ' ', ' '},
+            {' ', ' ', ' '}
+        };
+        
+        char currentPlayer = 'X';
+        boolean gameWon = false;
+        int moves = 0;
+        Scanner scanner = new Scanner(System.in);
+        while (!gameWon && moves < 9) {
+            printBoard(board);
+            
+            int row, col;
+            while (true) {
+                System.out.print("Enter a row (0, 1, or 2) for player " + currentPlayer + ": ");
+                row = scanner.nextInt();
+                System.out.print("Enter a column (0, 1, or 2) for player " + currentPlayer + ": ");
+                col = scanner.nextInt();
+                
+                if (row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col] == ' ') {
+                    board[row][col] = currentPlayer;
+                    break;
+                } else {
+                    System.out.println("Invalid move. Try again.");
+                }
+            }
+            moves++;
+            if (checkWinner(board, currentPlayer)) {
+                gameWon = true;
+                printBoard(board);
+                System.out.println("Player " + currentPlayer + " won!");
+            } else if (moves == 9) {
+                printBoard(board);
+                System.out.println("It's a draw!");
+            } else {
+                currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+            }
+        }
+        scanner.close();
+    }
+    public static void printBoard(char[][] board) {
+        System.out.println("-------------");
+        for (int i = 0; i < 3; i++) {
+            System.out.print("| ");
+            for (int j = 0; j < 3; j++) {
+                System.out.print(board[i][j] + " | ");
+            }
+            System.out.println("\n-------------");
+        }
+    }
+    public static boolean checkWinner(char[][] board, char player) {
+        for (int i = 0; i < 3; i++) {
+            if (board[i][0] == player && board[i][1] == player && board[i][2] == player) return true;
+            if (board[0][i] == player && board[1][i] == player && board[2][i] == player) return true;
+        }
+        if (board[0][0] == player && board[1][1] == player && board[2][2] == player) return true;
+        if (board[0][2] == player && board[1][1] == player && board[2][0] == player) return true;
+        return false;
     }
 } */
 
@@ -548,6 +647,69 @@ import java.util.HashSet;
     }
 } */
 
+//No.17
+/*public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter the number of banks: ");
+        int numBanks = scanner.nextInt();
+        System.out.print("Enter the minimum asset limit: ");
+        double limit = scanner.nextDouble();
+        double[] balances = new double[numBanks];
+        double[][] loans = new double[numBanks][numBanks];
+        
+        for (int i = 0; i < numBanks; i++) {
+            System.out.print("Enter balance and number of banks loaned by bank " + i + ": ");
+            balances[i] = scanner.nextDouble();
+            int numLoans = scanner.nextInt();
+            
+            for (int j = 0; j < numLoans; j++) {
+                int bankID = scanner.nextInt();
+                double amount = scanner.nextDouble();
+                loans[i][bankID] = amount;
+            }
+        }
+        List<Integer> unsafeBanks = findUnsafeBanks(numBanks, balances, loans, limit);
+        
+        System.out.print("Unsafe banks are: ");
+        for (int bank : unsafeBanks) {
+            System.out.print(bank + " ");
+        }
+        System.out.println();
+        scanner.close();
+    }
+        public static List<Integer> findUnsafeBanks(int numBanks, double[] balances, double[][] loans, double limit) {
+        boolean[] unsafe = new boolean[numBanks];
+        boolean change = true;
+        
+        while (change) {
+            change = false;
+            for (int i = 0; i < numBanks; i++) {
+                if (!unsafe[i]) {
+                    double totalAssets = balances[i];
+                    for (int j = 0; j < numBanks; j++) {
+                        if (!unsafe[j]) {
+                            totalAssets += loans[i][j];
+                        }
+                    }
+                    if (totalAssets < limit) {
+                        unsafe[i] = true;
+                        change = true;
+                    }
+                }
+            }
+        }
+        List<Integer> unsafeBanks = new ArrayList<>();
+        for (int i = 0; i < numBanks; i++) {
+            if (unsafe[i]) {
+                unsafeBanks.add(i);
+            }
+        }
+        return unsafeBanks;
+    }
+} */
+
 //No.18
 /*public class Main {
     public static void main(String[] args) {
@@ -584,7 +746,136 @@ import java.util.HashSet;
         }
     }
 } */
+//No.19
+/*public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the number of rows and columns: ");
+        int rows = scanner.nextInt();
+        int cols = scanner.nextInt();
+        int[][] values = new int[rows][cols];
+        
+        System.out.println("Enter the values row by row:");
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                values[i][j] = scanner.nextInt();
+            }
+        }
+        if (isConsecutiveFour(values)) {
+            System.out.println("The array contains four consecutive numbers.");
+        } else {
+            System.out.println("The array does not contain four consecutive numbers.");
+        }
+        scanner.close();
+    }
+    public static boolean isConsecutiveFour(int[][] values) {
+        int rows = values.length;
+        int cols = values[0].length;
+        
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                int num = values[i][j];
 
+                if (j + 3 < cols && num == values[i][j + 1] && num == values[i][j + 2] && num == values[i][j + 3]) {
+                    return true;
+                }
+                if (i + 3 < rows && num == values[i + 1][j] && num == values[i + 2][j] && num == values[i + 3][j]) {
+                    return true;
+                }
+                if (i + 3 < rows && j + 3 < cols && num == values[i + 1][j + 1] && num == values[i + 2][j + 2] && num == values[i + 3][j + 3]) {
+                    return true;
+                }
+                if (i + 3 < rows && j - 3 >= 0 && num == values[i + 1][j - 1] && num == values[i + 2][j - 2] && num == values[i + 3][j - 3]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+} */
+
+//No.20
+/*public class Main {
+    private static final int ROWS = 6;
+    private static final int COLUMNS = 7;
+    private static final char EMPTY = '.';
+    private static final char PLAYER1 = 'R';
+    private static final char PLAYER2 = 'Y';
+
+    public static void main(String[] args) {
+        char[][] board = new char[ROWS][COLUMNS];
+        for (char[] row : board) Arrays.fill(row, EMPTY);
+
+        boolean player1Turn = true;
+        boolean gameWon = false;
+        Scanner scanner = new Scanner(System.in);
+        
+        while (!gameWon) {
+            displayBoard(board);
+            char currentPlayer = player1Turn ? PLAYER1 : PLAYER2;
+            System.out.print("Drop a " + (player1Turn ? "red" : "yellow") + " disk at column (0-6): ");
+            int column = scanner.nextInt();
+            
+            if (column < 0 || column >= COLUMNS || board[0][column] != EMPTY) {
+                System.out.println("Invalid move, try again.");
+                continue;
+            }
+            int row = dropDisk(board, column, currentPlayer);
+            
+            if (checkWin(board, row, column, currentPlayer)) {
+                displayBoard(board);
+                System.out.println("The " + (player1Turn ? "red" : "yellow") + " player won!");
+                gameWon = true;
+            }
+            player1Turn = !player1Turn;
+        }
+        scanner.close();
+    }
+    private static void displayBoard(char[][] board) {
+        for (char[] row : board) {
+            for (char cell : row) {
+                System.out.print("|" + cell);
+            }
+            System.out.println("|");
+        }
+        System.out.println("---------------");
+    }
+    private static int dropDisk(char[][] board, int column, char player) {
+        for (int i = ROWS - 1; i >= 0; i--) {
+            if (board[i][column] == EMPTY) {
+                board[i][column] = player;
+                return i;
+            }
+        }
+        return -1;
+    }
+    private static boolean checkWin(char[][] board, int row, int col, char player) {
+        return checkDirection(board, row, col, player, 1, 0) || 
+               checkDirection(board, row, col, player, 0, 1) || 
+               checkDirection(board, row, col, player, 1, 1) || 
+               checkDirection(board, row, col, player, 1, -1);  
+    }
+    private static boolean checkDirection(char[][] board, int row, int col, char player, int rowDir, int colDir) {
+        int count = 1;
+        count += countConsecutive(board, row, col, player, rowDir, colDir);
+        count += countConsecutive(board, row, col, player, -rowDir, -colDir);
+        return count >= 4;
+    }
+    private static int countConsecutive(char[][] board, int row, int col, char player, int rowDir, int colDir) {
+        int count = 0;
+        for (int i = 1; i < 4; i++) {
+            int newRow = row + i * rowDir;
+            int newCol = col + i * colDir;
+            if (newRow >= 0 && newRow < ROWS && newCol >= 0 && newCol < COLUMNS && board[newRow][newCol] == player) {
+                count++;
+            } else {
+                break;
+            }
+        }
+        return count;
+    }
+} */
+ 
 //No.21
 /*public class Main {
     public static void main(String[] args) {
@@ -1047,6 +1338,37 @@ import java.util.HashSet;
     }
 } */
 
+//No.30
+/*public class Main {
+    public static double[] linearEquation(double[][] a, double[] b) {
+        double a00 = a[0][0], a01 = a[0][1];
+        double a10 = a[1][0], a11 = a[1][1];
+        double b0 = b[0], b1 = b[1];
+        double determinant = a00 * a11 - a01 * a10;
+
+        if (determinant == 0) {
+            return null; 
+        }
+        double x = (b0 * a11 - b1 * a01) / determinant;
+        double y = (b1 * a00 - b0 * a10) / determinant;
+        return new double[]{x, y};
+    }
+    public static void main(String[] args) {
+        java.util.Scanner input = new java.util.Scanner(System.in);
+        System.out.println("Enter a00, a01, a10, a11, b0, b1: ");
+        double[][] a = {{input.nextDouble(), input.nextDouble()},
+                        {input.nextDouble(), input.nextDouble()}};
+        double[] b = {input.nextDouble(), input.nextDouble()};
+        double[] result = linearEquation(a, b);
+
+        if (result == null) {
+            System.out.println("The equation has no solution.");
+        } else {
+            System.out.println("x = " + result[0] + ", y = " + result[1]);
+        }
+        input.close();
+    }
+}*/
 //No.31
 /*public class Main {
     public static void main(String[] args) {
@@ -1126,7 +1448,37 @@ import java.util.HashSet;
         return area;
     }
 } */
+//No.33
+/*public class Main {
+    public static double calculateArea(double x1, double y1, double x2, double y2, double x3, double y3) {
+        return 0.5 * Math.abs(x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2));
+    }
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
 
+        System.out.println("Enter x1, y1, x2, y2, x3, y3, x4, y4:");
+        double x1 = input.nextDouble(), y1 = input.nextDouble();
+        double x2 = input.nextDouble(), y2 = input.nextDouble();
+        double x3 = input.nextDouble(), y3 = input.nextDouble();
+        double x4 = input.nextDouble(), y4 = input.nextDouble();
+
+        double xc = (x1 + x2 + x3 + x4) / 4;
+        double yc = (y1 + y2 + y3 + y4) / 4;
+        double[] areas = new double[4];
+        areas[0] = calculateArea(x1, y1, x2, y2, xc, yc);
+        areas[1] = calculateArea(x2, y2, x3, y3, xc, yc);
+        areas[2] = calculateArea(x3, y3, x4, y4, xc, yc);
+        areas[3] = calculateArea(x4, y4, x1, y1, xc, yc);
+
+        Arrays.sort(areas);
+        System.out.print("The areas are: ");
+        for (double area : areas) {
+            System.out.printf("%.2f ", area);
+        }
+        System.out.println();
+        input.close();
+    }
+}*/
 //No.34
 /*public class Main {
     public static void main(String[] args) {
@@ -1299,7 +1651,6 @@ import java.util.HashSet;
         input.close();
     }
 } */
-
 
 
 
